@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Livin' by Mandiri</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #000;
+            overflow-x: hidden;
+        }
+
+        /* Progress Bar Atas */
+        .progress-bar {
+            width: 100%;
+            height: 3px;
+            background: #E3E3E3;
+            position: relative;
+        }
+        .progress-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 25%;
+            background: #0066FF;
+            border-radius: 0 2px 2px 0;
+        }
+
+        /* Header — e-money + Bahasa */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 14px;
+        }
+        .emoney-tag {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: #F0F4FF;
+            color: #0066FF;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+        .emoney-tag .dot {
+            width: 9px;
+            height: 9px;
+            background: #0066FF;
+            border-radius: 50%;
+        }
+        .lang-switch {
+            display: flex;
+            gap: 0;
+        }
+        .lang-btn {
+            padding: 5px 12px;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .lang-btn.en {
+            background: #E3E3E3;
+            color: #666;
+            border-radius: 20px 0 0 20px;
+        }
+        .lang-btn.id {
+            background: #0066FF;
+            color: #fff;
+            border-radius: 0 20px 20px 0;
+        }
+
+        /* AREA ILUSTRASI — LATAR KUNING DIHAPUS */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            padding: 20px 0 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* ✅ LATAR KUNING SUDAH DIHAPUS — TIDAK ADA WARNA LAGI */
+
+        /* Tempat Gambar */
+        .illustration-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+        }
+        .illustration {
+            width: 82%;
+            max-width: 300px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Teks Sambutan */
+        .text-section {
+            padding: 0 20px 24px;
+            text-align: center;
+        }
+        .main-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: #000;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+        .sub-title {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* Tombol Navigasi */
+        .btn-section {
+            padding: 0 18px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: auto;
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 13px;
+            background: #0066FF;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 102, 255, 0.25);
+        }
+        .btn-secondary {
+            width: 100%;
+            padding: 12px;
+            background: #ffffff;
+            color: #0066FF;
+            font-size: 15px;
+            font-weight: 600;
+            border: 2px solid #0066FF;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Progress Bar Atas -->
+    <div class="progress-bar">
+        <div class="progress-fill"></div>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="emoney-tag">
+            <span class="dot"></span>
+            e-money
+        </div>
+        <div class="lang-switch">
+            <button class="lang-btn en">EN</button>
+            <button class="lang-btn id">ID</button>
+        </div>
+    </div>
+
+    <!-- AREA GAMBAR — LATAR KUNING SUDAH DIHAPUS -->
+    <div class="hero-section">
+        <!-- ✅ Bentuk kuning sudah dihapus — hanya gambar yang tampil -->
+        <div class="illustration-container">
+            <img 
+                src="livin.jpg" 
+                alt="Ilustrasi Livin' by Mandiri" 
+                class="illustration"
+            >
+        </div>
+    </div>
+
+    <!-- Teks Sambutan -->
+    <div class="text-section">
+        <h1 class="main-title">Selamat datang di aplikasi Livin' by Mandiri terbaru</h1>
+        <p class="sub-title">Satu aplikasi perbankan untuk gaya hidup dan segala kebutuhan Anda sehari-hari.</p>
+    </div>
+
+    <!-- Tombol -->
+    <div class="btn-section">
+        <button class="btn-primary" onclick="window.location.href='login.html'">Belum Punya Rekening Mandiri</button>
+        <button class="btn-secondary" onclick="window.location.href='login.html'">Punya Kartu Debit/Kredit Mandiri</button>
+    </div>
+
+</body>
+</html>

