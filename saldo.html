@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Livin' by Mandiri — Beranda</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        body {
+            background-color: #F5F7FA;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        /* ========== HEADER BIRU ========== */
+        .header {
+            background: linear-gradient(135deg, #0066FF 0%, #0088FF 100%);
+            color: #fff;
+            padding: 16px 14px 24px;
+            border-radius: 0 0 20px 20px;
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #fff;
+            overflow: hidden;
+        }
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .user-name {
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .user-points {
+            font-size: 12px;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .header-icons {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+            font-size: 20px;
+        }
+        .icon-badge {
+            position: relative;
+        }
+        .badge-red {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 10px;
+            height: 10px;
+            background: #FF3B30;
+            border-radius: 50%;
+            border: 2px solid #0066FF;
+        }
+
+        /* ========== KARTU REKENING ========== */
+        .account-card {
+            background: #fff;
+            border-radius: 16px;
+            margin: -12px 12px 16px;
+            padding: 16px 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #000;
+        }
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        .tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 14px;
+            overflow-x: auto;
+        }
+        .tab {
+            font-size: 13px;
+            color: #888;
+            padding-bottom: 6px;
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+        }
+        .tab.active {
+            color: #0066FF;
+            border-bottom: 2px solid #0066FF;
+            font-weight: 600;
+        }
+        .account-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #F5F7FA;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 8px;
+        }
+        .account-name {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .account-balance {
+            font-size: 16px;
+            font-weight: 700;
+            color: #000;
+        }
+        .account-img {
+            width: 80px;
+            height: 50px;
+            border-radius: 6px;
+            background: #ddd;
+        }
+        .all-accounts {
+            text-align: center;
+            font-size: 13px;
+            color: #0066FF;
+            margin-top: 8px;
+        }
+
+        /* ========== TRANSAKSI FAVORIT ========== */
+        .section {
+            margin: 0 12px 20px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 16px 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .section-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #000;
+        }
+        .section-link {
+            font-size: 14px;
+            color: #0066FF;
+        }
+        .grid-menu {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px 8px;
+        }
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        .menu-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: #F0F4FF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #0066FF;
+        }
+        .menu-text {
+            font-size: 11px;
+            color: #333;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        /* ========== QUICK PICK ========== */
+        .quickpick-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .quickpick-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        /* ========== NAVIGASI BAWAH ========== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 12px;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+            border-radius: 16px 16px 0 0;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            color: #888;
+        }
+        .nav-item.active {
+            color: #0066FF;
+        }
+        .nav-icon {
+            font-size: 22px;
+        }
+        .nav-center {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #0066FF;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-top: -10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== HEADER ========== -->
+    <div class="header">
+        <div class="header-top">
+            <div class="user-info">
+                <div class="avatar">
+                    <img src="saldo.png" alt="Avatar">
+                </div>
+                <div>
+                    <div class="user-name">Dika Loloh</div>
+                    <div class="user-points">2.600 Livin' point</div>
+                </div>
+            </div>
+            <div class="header-icons">
+                <span class="icon-badge">✉️<span class="badge-red"></span></span>
+                <span>⚙️</span>
+                <span>↻</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== KARTU REKENING ========== -->
+    <div class="account-card">
+        <div class="card-header">
+            <div class="card-title">Rekening</div>
+            <div class="card-actions">
+                <span>👁 Saldo</span>
+                <span>⚙️ Atur</span>
+            </div>
+        </div>
+        <div class="tabs">
+            <div class="tab active">Tabungan</div>
+            <div class="tab">Deposito</div>
+            <div class="tab">Kartu Kredit</div>
+            <div class="tab">Pinjaman</div>
+            <div class="tab">Investasi</div>
+        </div>
+        <div class="account-info">
+            <div>
+                <div class="account-name">Tabungan NOW IDR</div>
+                <div class="account-balance">Rp 260.000.000</div>
+            </div>
+            <div class="account-img"></div>
+        </div>
+        <div class="all-accounts">Semua Tabungan Anda 📎</div>
+    </div>
+
+    <!-- ========== TRANSAKSI FAVORIT ========== -->
+    <div class="section">
+        <div class="section-header">
+            <div class="section-title">Transaksi Favorit</div>
+            <div class="section-link">⚙️ Atur</div>
+        </div>
+        <div class="grid-menu">
+            <div class="menu-item">
+                <div class="menu-icon">➡️</div>
+                <div class="menu-text">Transfer Rupiah</div>
+            </div>
+            <div class="menu-item">
+                <div class="menu-icon">📄</div>
+                <div class="menu-text">Bayar/VA</div>
+            </div>
+            <div class="menu-item">
+                <div class="menu-icon">⬆️</div>
+                <div class="menu-text">Top-up</div>
+            </div>
+            <div class="menu-item">
+                <div class="menu-icon">💳</div>
+                <div class="menu-text">e-money</div>
+            </div>
+            <div class="menu-item">
+                <div class="menu-icon">🏧</div>
+                <div class="menu-text">Setor Tarik</div>
+            </div>
+            <div class="menu-item">
+                <div class="menu-icon">💱</div>
+                <div class="menu-text">Transfer Valas</div>
+            </div>
+            <div class="menu-item">
+                <div class="menu-icon">📊</div>
+                <div class="menu-text">Investasi</div>
+            </div>
+            <div class="menu-item">
+                <div class="menu-icon">📷</div>
+                <div class="menu-text">QR Terima Transfer</div>
+            </div>
+            <div class="menu-item">
+                <div class="menu-icon">📡</div>
+                <div class="menu-text">Tap to Pay</div>
+            </div>
+            <div class="menu-item">
+                <div class="menu-icon">⚫</div>
+                <div class="menu-text">Lihat Semua</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== QUICK PICK ========== -->
+    <div class="section">
+        <div class="quickpick-header">
+            <div class="quickpick-title">Quick Pick</div>
+            <div class="section-link">⚙️ Atur</div>
+        </div>
+    </div>
+
+    <!-- ========== NAVIGASI BAWAH ========== -->
+    <div class="bottom-nav">
+        <div class="nav-item active">
+            <span class="nav-icon">🏠</span>
+            <span>Beranda</span>
+        </div>
+        <div class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span>Produk Anda</span>
+        </div>
+        <div class="nav-item nav-center">⊞</div>
+        <div class="nav-item">
+            <span class="nav-icon">🛒</span>
+            <span>Suha</span>
+        </div>
+        <div class="nav-item">
+            <span class="nav-icon">⭐</span>
+            <span>Loyalty</span>
+        </div>
+    </div>
+
+</body>
+</html>
+
